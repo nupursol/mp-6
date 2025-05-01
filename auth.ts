@@ -1,21 +1,16 @@
 // auth.ts
-import GoogleProvider from "next-auth/providers/google";
-import type { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google"; // import google provider for OAuth
+import type { NextAuthOptions } from "next-auth"; // import NextAuth types
 
 export const authConfig: NextAuthOptions = {
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET, // setting secret for JWT (must be set in .env for production)
     providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        GoogleProvider({clientId: process.env.GOOGLE_CLIENT_ID!, // getting google client id from env
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!, //getting google client secret from env
         }),
     ],
-    session: {
-        strategy: "jwt",
+    session: {strategy: "jwt", // using JWT for session management
     },
-    callbacks: {
-        async session({ session }) {
-            return session; // Customize this if you want to include token data
-        },
+    callbacks: {async session({ session }) { return session;},
     },
 };
